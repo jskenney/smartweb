@@ -82,7 +82,9 @@ if user == 'x' or user == '':
 
 # We should try: filename, filename+index.html
 # Provide the file if that path exists and exists within the appropriate path
-possibilities = [filename, filename+'index.html']
+possibilities = [filename]
+if len(filename) > 1 and filename[-1] == '/':
+    possibilities.append(filename+'index.html')
 for filename in possibilities:
     if os.path.exists(filename) and os.path.isfile(filename):
         authorized = False
