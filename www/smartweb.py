@@ -5,13 +5,16 @@
 
 # Load in system libraries
 import cgi, sys, os, shutil
+from hashlib import md5
 
 # Define path for local configuration files
 sys.path.append("../lib")
 sys.path.append("../config")
 
 # Load in local configuration files and authenitication
-from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs
+from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs, authFile, authMapFile
+from tools import loadDB, saveDB
+
 
 # Simple function to provide a file back to the browser
 def provideFile(filename, mimeTypes):
@@ -51,9 +54,27 @@ if os.path.split(filename)[1] in fileMAP:
 
 # Identify the user via the auth library
 if l is None:
-    from auth import user
+    from auth import user, myuuid
 else:
-    from deauth import user
+    from deauth import user, myuuid
+
+u = form.getvalue('smartwebEmail')
+p = form.getvalue('smartwebPassword')
+
+# If username and password were provided, check to see
+# if this is a valid user
+if u is not None and p is not None:
+    up = u + p
+    userhash = md5(up.encode()).hexdigest()
+    pwdata = loadDB(authFile, {'0000':{}})
+    if userhash in pwdata:
+        user = userhash
+        userMap = loadDB(authMapFile, {})
+        userMap[myuuid] = userhash
+        saveDB(authMapFile, userMap)
+    print('Content-type: text/html\n\n')
+    print(userhash)
+    sys.exit()
 
 # If no user found, then stop
 if user == 'x' or user == '':
