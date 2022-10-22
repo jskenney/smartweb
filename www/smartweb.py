@@ -60,7 +60,7 @@ if user == 'x' or user == '':
     provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
 
 # Provide the file if that path exists and exists within the appropriate path
-if os.path.exists(filename) and os.path.realpath(filename).find(sourceDir) == 0:
+if os.path.exists(filename) and os.path.realpath(filename).find(sourceDir) == 0 and os.path.isfile(filename):
     provideFile(filename, mimeTypes)
 elif missingFileProvideDefault:
     filename = sourceDir + '/' + defaultPage
