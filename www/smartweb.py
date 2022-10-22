@@ -58,13 +58,13 @@ if l is None:
 else:
     from deauth import user, myuuid
 
-u = form.getvalue('smartwebEmail')
-p = form.getvalue('smartwebPassword')
+usnm = form.getvalue('smartwebEmail')
+pswd = form.getvalue('smartwebPassword')
 
 # If username and password were provided, check to see
 # if this is a valid user
-if u is not None and p is not None:
-    up = u + p
+if usnm is not None and pswd is not None:
+    up = usnm + pswd
     userhash = md5(up.encode()).hexdigest()
     pwdata = loadDB(authFile, {'0000':{}})
     if userhash in pwdata:
