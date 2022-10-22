@@ -11,7 +11,7 @@ sys.path.append("../lib")
 sys.path.append("../config")
 
 # Load in local configuration files and authenitication
-from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault
+from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs
 
 # Simple function to provide a file back to the browser
 def provideFile(filename, mimeTypes):
@@ -60,8 +60,15 @@ if user == 'x' or user == '':
     provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
 
 # Provide the file if that path exists and exists within the appropriate path
-if os.path.exists(filename) and os.path.realpath(filename).find(sourceDir) == 0 and os.path.isfile(filename):
-    provideFile(filename, mimeTypes)
+if os.path.exists(filename) and os.path.isfile(filename):
+    authorized = False
+    for d in provideDirs:
+        if os.path.realpath(filename).find(d) == 0:
+            authorized = True
+    if authorized:
+        provideFile(filename, mimeTypes)
+    else:
+        provideError(errorMsg, 'File not found: '+p)
 elif missingFileProvideDefault:
     filename = sourceDir + '/' + defaultPage
     if os.path.exists(filename) and os.path.realpath(filename).find(sourceDir) == 0:

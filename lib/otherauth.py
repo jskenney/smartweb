@@ -7,6 +7,7 @@ from smartconfig import authFile, authMapFile, cookieName
 from tools import loadDB
 
 user = ''
+admin = False
 permissions = {}
 
 if 'HTTP_COOKIE' in os.environ:

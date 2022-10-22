@@ -8,6 +8,9 @@ errorMsg     = baseDir + '/lib/error.html'
 # Location of actual web content
 sourceDir    = baseDir + '/real/'
 
+# Authorized source directories
+provideDirs  = [sourceDir]
+
 # Default webpage
 defaultPage  = 'index.html'
 
