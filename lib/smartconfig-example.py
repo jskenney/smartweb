@@ -15,7 +15,7 @@ provideDirs  = [sourceDir]
 defaultPage  = 'index.html'
 
 # Provide default page when a file is not found?
-missingFileProvideDefault = True
+missingFileProvideDefault = False
 
 # Location of authentication information
 userDir      = baseDir + '/users/'
@@ -36,7 +36,10 @@ logonFile    = 'smartweb-logon.html'
 mimeTypes    = {'.html':'text/html', 
                 '.xhtml':'text/xhtml', 
 				'.js': 'text/javascript',
-				'.css': 'text/css'
+				'.css': 'text/css',
+                '.png': 'image/png',
+                '.jpg': 'image/jpeg',
+                '.jpeg': 'image/jpeg'
 			   }
 
 # if these files are asked for, with any path, the mapped
