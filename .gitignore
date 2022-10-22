@@ -1,0 +1,8 @@
+*.tgz
+*.zip
+*.tar.gz
+*.tar
+*.html
+*.db
+*.json
+smartconfig.py
