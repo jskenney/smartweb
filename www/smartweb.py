@@ -59,21 +59,24 @@ else:
 if user == 'x' or user == '':
     provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
 
+# We should try: filename, filename+index.html
 # Provide the file if that path exists and exists within the appropriate path
-if os.path.exists(filename) and os.path.isfile(filename):
-    authorized = False
-    for d in provideDirs:
-        if os.path.realpath(filename).find(d) == 0:
-            authorized = True
-    if authorized:
-        provideFile(filename, mimeTypes)
-    else:
-        provideError(errorMsg, 'File not found: '+p)
-elif missingFileProvideDefault:
+possibilities = [filename, filename+'index.html']
+for filename in possibilities:
+    if os.path.exists(filename) and os.path.isfile(filename):
+        authorized = False
+        for d in provideDirs:
+            if os.path.realpath(filename).find(d) == 0:
+                authorized = True
+        if authorized:
+            provideFile(filename, mimeTypes)
+
+# A Valid file wasn't found, try using the default page
+if missingFileProvideDefault:
     filename = sourceDir + '/' + defaultPage
     if os.path.exists(filename) and os.path.realpath(filename).find(sourceDir) == 0:
         provideFile(filename, mimeTypes)
-    else:
-        provideError(errorMsg, 'File not found: '+p)
-else:
-    provideError(errorMsg, 'File not found: '+p)
+
+# Otherwise just flag it as an error
+provideError(errorMsg, 'File not found: '+p)
+
