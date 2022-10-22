@@ -50,7 +50,7 @@ fileMAP      = {'smartweb-logon.html': loginDir + 'smartweb-logon.html',
 				'smartweb-logon.css': loginDir + 'smart-logon.css',
 				'smartweb-sha256.js': loginDir + 'smartweb-sha256.js',
 				'smartweb-icon.png': loginDir + 'smartweb-icon.png',
-				'smartweb-login.css': loginDir + 'smartweb-login.css',
+				'smartweb-logon.css': loginDir + 'smartweb-logon.css',
 				'smartweb-avatar.png': loginDir + 'smartweb-avatar.png'
 			   }
 
