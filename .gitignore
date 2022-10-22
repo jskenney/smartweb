@@ -6,3 +6,5 @@
 *.db
 *.json
 smartconfig.py
+www/
+real/
