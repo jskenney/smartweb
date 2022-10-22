@@ -4,7 +4,7 @@
 # Provides a simple web file protection service
 
 # Load in system libraries
-import cgi, sys, os, shutil
+import cgi, sys, os, shutil, importlib
 from hashlib import md5
 
 # Define path for local configuration files
@@ -12,7 +12,7 @@ sys.path.append("../lib")
 sys.path.append("../config")
 
 # Load in local configuration files and authenitication
-from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs, authFile, authMapFile
+from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs, authFile, authMapFile, pyMAP
 from tools import loadDB, saveDB
 
 
@@ -24,8 +24,9 @@ def provideFile(filename, mimeTypes):
     else:
         print('Content-Type: application/octet-stream\n')
     sys.stdout.flush()
-    with open(filename, 'rb') as f:
-        shutil.copyfileobj(f, sys.stdout.buffer)
+    if os.path.isfile(filename):
+        with open(filename, 'rb') as f:
+            shutil.copyfileobj(f, sys.stdout.buffer)
     sys.exit()
 
 # Simple function to provide an error message to the user
@@ -79,6 +80,16 @@ if usnm is not None and pswd is not None:
 # If no user found, then stop
 if user == 'x' or user == '':
     provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
+
+# If the file is in the pyMAP than import that file
+# and exit the program.  The assumption is that this new script
+# will handle the headers and content.
+if os.path.split(filename)[1] in pyMAP and os.path.isfile(pyMAP[os.path.split(filename)[1]]):
+    pypath, pyfile = os.path.split(os.path.realpath(pyMAP[os.path.split(filename)[1]]))
+    pyfile = os.path.splitext(pyfile)
+    sys.path.append(pypath)
+    importlib.import_module(pyfile[0])
+    sys.exit()
 
 # We should try: filename, filename+index.html
 # Provide the file if that path exists and exists within the appropriate path

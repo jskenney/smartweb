@@ -54,5 +54,12 @@ fileMAP      = {'smartweb-logon.html': loginDir + 'smartweb-logon.html',
 				'smartweb-avatar.png': loginDir + 'smartweb-avatar.png'
 			   }
 
+# if python files are asked for, check the following map of authorized
+# python scripts.  If they are not in this dictionary, they will be
+# provided as text.  If they are in this, they will be imported, be careful
+# on how you add python files.  Just as with the fileMAP, location does
+# not matter.
+pyMAP        = {'test.py': '/var/www/test/series.py'}
+
 # Name of the cookie we will store for user tracking
 cookieName   = 'smartweb'
