@@ -66,5 +66,7 @@ elif missingFileProvideDefault:
     filename = sourceDir + '/' + defaultPage
     if os.path.exists(filename) and os.path.realpath(filename).find(sourceDir) == 0:
         provideFile(filename, mimeTypes)
+    else:
+        provideError(errorMsg, 'File not found: '+p)
 else:
     provideError(errorMsg, 'File not found: '+p)
