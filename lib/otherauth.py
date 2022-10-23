@@ -24,5 +24,7 @@ if 'HTTP_COOKIE' in os.environ:
             user = userMap[myuuid]
             userFile = loadDB(authFile, {user:{}})
             permissions = userFile[user]
+            if 'admin' in permissions and permissions['admin']:
+                admin = True
 
 
