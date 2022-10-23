@@ -1,6 +1,6 @@
 # Import Required Libraries
 import os, uuid
-from smartconfig import authMapFile, cookieName
+from smartconfig import authFile, authMapFile, cookieName
 from tools import loadDB
 
 # Create a default UUID
@@ -27,8 +27,17 @@ userMap = loadDB(authMapFile, {})
 
 # Set the default user
 user = ''
+permissions = {}
+admin = False
 
 # If the user is valid, return their name
 if myuuid in userMap:
     user = userMap[myuuid]
 
+pwdata = loadDB(authFile, {'0000':{}})
+if user in pwdata:
+    permissions = pwdata[user]
+    if 'admin' in permissions and permissions['admin']:
+        admin = True
+else:
+    user = ''

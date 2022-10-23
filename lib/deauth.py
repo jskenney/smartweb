@@ -34,3 +34,5 @@ if myuuid in userMap:
 
 # Set the user to unknown
 user = ''
+admin = False
+permissions = {}
