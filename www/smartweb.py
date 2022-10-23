@@ -69,13 +69,15 @@ if usnm is not None and pswd is not None:
     up = usnm + pswd
     userhash = md5(up.encode()).hexdigest()
     pwdata = loadDB(authFile, {'0000':{}})
+    print('Content-type: text/html\n\n')
     if userhash in pwdata:
         user = userhash
         userMap = loadDB(authMapFile, {})
         userMap[myuuid] = userhash
         saveDB(authMapFile, userMap)
-    print('Content-type: text/html\n\n')
-    print(userhash)
+        print('Success!')
+    else:
+        print(userhash)
     sys.exit()
 
 # If no user found, then stop
