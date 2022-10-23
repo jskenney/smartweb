@@ -56,8 +56,10 @@ if os.path.split(filename)[1] in fileMAP:
 
 # Identify the user via the auth library
 if l is None:
-    from auth import user, myuuid
+    from auth import user, myuuid, permissions, admin
 else:
+    permissions = {}
+    admin = False
     from deauth import user, myuuid
 
 usnm = form.getvalue('smartwebEmail')
