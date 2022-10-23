@@ -15,10 +15,11 @@ sys.path.append("../config")
 from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs, authFile, authMapFile, pyMAP
 from tools import loadDB, saveDB
 
-
 # Simple function to provide a file back to the browser
-def provideFile(filename, mimeTypes):
+def provideFile(filename, mimeTypes, saveas=''):
     extension = os.path.splitext(filename)[1]
+    if saveas != '':
+        print('Content-Disposition: attachment; filename="'+saveas+'"')
     if extension in mimeTypes:
         print('Content-type: '+mimeTypes[extension]+'\n')
     else:
@@ -113,4 +114,3 @@ if missingFileProvideDefault:
 
 # Otherwise just flag it as an error
 provideError(errorMsg, 'File not found: '+p)
-
