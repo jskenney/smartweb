@@ -51,7 +51,8 @@ fileMAP      = {'smartweb-logon.html': loginDir + 'smartweb-logon.html',
                 'smartweb-sha256.js': loginDir + 'smartweb-sha256.js',
                 'smartweb-icon.png': loginDir + 'smartweb-icon.png',
                 'smartweb-logon.css': loginDir + 'smartweb-logon.css',
-                'smartweb-avatar.png': loginDir + 'smartweb-avatar.png'
+                'smartweb-avatar.png': loginDir + 'smartweb-avatar.png',
+                'smartweb-jquery.js': loginDir + 'smartweb-jquery.js'
                }
 
 # if python files are asked for, check the following map of authorized

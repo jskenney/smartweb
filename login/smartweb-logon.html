@@ -12,7 +12,7 @@
 
     <script src="smartweb-sha256.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="smartweb-jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <title>Site Logon</title>
@@ -40,10 +40,10 @@
         $('#sbutton').prop('disabled', true);
         $('#inputEmail').prop('disabled', true);
         $('#inputPassword').prop('disabled', true);
-	var passwd = $('#inputPassword').val();
+	      var passwd = $('#inputPassword').val();
         var email = $('#inputEmail').val();
         passwd = forge_sha256(passwd);
-	email = forge_sha256(email);
+	      email = forge_sha256(email);
         $.ajax({
             url: '?',
             method: 'POST',
