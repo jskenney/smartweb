@@ -60,7 +60,7 @@ fileMAP      = {'smartweb-logon.html': loginDir + 'smartweb-logon.html',
 # provided as text.  If they are in this, they will be imported, be careful
 # on how you add python files.  Just as with the fileMAP, location does
 # not matter.
-pyMAP        = {'test.py': '/var/www/test/series.py'}
+pyMAP        = {'logoff': baseDir + '/lib/deauth.py'}
 
 # Name of the cookie we will store for user tracking
 cookieName   = 'smartweb'

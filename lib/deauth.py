@@ -2,7 +2,7 @@
 
 # Import Required Libraries
 import os, uuid
-from smartconfig import authMapFile, cookieName
+from smartconfig import authMapFile, cookieName, defaultPage
 from tools import loadDB, saveDB
 
 # Create a default UUID
@@ -36,3 +36,6 @@ if myuuid in userMap:
 user = ''
 admin = False
 permissions = {}
+
+print('Content-type: text/html\n\n')
+print('<head><meta http-equiv="Refresh" content="0; URL='+defaultPage+'" /></head>')
