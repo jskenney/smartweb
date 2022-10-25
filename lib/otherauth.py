@@ -5,10 +5,13 @@
 import os, uuid
 from smartconfig import authFile, authMapFile, cookieName
 from tools import loadDB
+from sessions import Session
 
 user = ''
 admin = False
 permissions = {}
+myuuid = None
+session = None
 
 if 'HTTP_COOKIE' in os.environ:
     hc = os.environ['HTTP_COOKIE'].split(';')
@@ -27,4 +30,6 @@ if 'HTTP_COOKIE' in os.environ:
             if 'admin' in permissions and permissions['admin']:
                 admin = True
 
+if myuuid is not None:
+    session = Session(cookieName=myuuid)
 
