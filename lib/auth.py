@@ -2,9 +2,14 @@
 import os, uuid
 from smartconfig import authFile, authMapFile, cookieName
 from tools import loadDB
+from sessions import Session
 
 # Create a default UUID
 myuuid = str(uuid.uuid4())
+user = ''
+permissions = {}
+admin = False
+session = None
 
 # Either add that UUID as the cookie (cookieName) or replace myuuid
 # with the value of myuuid if it exists
@@ -25,15 +30,11 @@ else:
 # Load the user file
 userMap = loadDB(authMapFile, {})
 
-# Set the default user
-user = ''
-permissions = {}
-admin = False
-
 # If the user is valid, return their name
 if myuuid in userMap:
     user = userMap[myuuid]
 
+# Load User data from authentication file
 pwdata = loadDB(authFile, {'0000':{}})
 if user in pwdata:
     permissions = pwdata[user]
@@ -41,3 +42,9 @@ if user in pwdata:
         admin = True
 else:
     user = ''
+
+# Load session variable
+if user != '':
+    session = Session(cookieName=myuuid, identifier=user)
+else:
+    session = Session(cookieName=myuuid)

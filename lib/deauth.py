@@ -4,6 +4,7 @@
 import os, uuid
 from smartconfig import authMapFile, cookieName, defaultPage
 from tools import loadDB, saveDB
+from sessions import Session
 
 # Create a default UUID
 myuuid = str(uuid.uuid4())
@@ -36,6 +37,7 @@ if myuuid in userMap:
 user = ''
 admin = False
 permissions = {}
+session = Session(cookieName=myuuid)
 
 print('Content-type: text/html\n\n')
 print('<head><meta http-equiv="Refresh" content="0; URL='+defaultPage+'" /></head>')

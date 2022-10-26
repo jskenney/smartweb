@@ -7,12 +7,14 @@ from smartconfig import authFile, authMapFile, cookieName
 from tools import loadDB
 from sessions import Session
 
+# Create a default UUID
 user = ''
 admin = False
 permissions = {}
 myuuid = None
 session = None
 
+# Get logged on user's cookie
 if 'HTTP_COOKIE' in os.environ:
     hc = os.environ['HTTP_COOKIE'].split(';')
     found = False
@@ -30,6 +32,8 @@ if 'HTTP_COOKIE' in os.environ:
             if 'admin' in permissions and permissions['admin']:
                 admin = True
 
-if myuuid is not None:
+# Load session variable
+if user != '':
+    session = Session(cookieName=myuuid, identifier=user)
+else:
     session = Session(cookieName=myuuid)
-
