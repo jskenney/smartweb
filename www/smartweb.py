@@ -104,9 +104,8 @@ if len(filename) > 1 and filename[-1] == '/':
 for filename in possibilities:
     if os.path.exists(filename) and os.path.isfile(filename):
         authorized = False
-        for d in provideDirs:
-            if os.path.realpath(filename).find(d) == 0:
-                authorized = True
+        if os.path.realpath(filename).startswith(provideDirs) and os.path.realpath(filename).find('/.') == -1:
+            authorized = True
         if authorized:
             provideFile(filename, mimeTypes)
 
