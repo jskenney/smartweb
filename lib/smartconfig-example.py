@@ -9,7 +9,7 @@ errorMsg     = baseDir + '/lib/error.html'
 sourceDir    = baseDir + '/real/'
 
 # Authorized source directories
-provideDirs  = [sourceDir]
+provideDirs  = (sourceDir)
 
 # Default webpage
 defaultPage  = 'index.html'
