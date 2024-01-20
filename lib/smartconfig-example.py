@@ -33,26 +33,25 @@ loginDir     = baseDir + '/login/'
 logonFile    = 'smartweb-logon.html'
 
 # specific MIME types, that will not be default octet-stream
-mimeTypes    = {'.html':'text/html', 
-                '.xhtml':'text/xhtml', 
-                '.js': 'text/javascript',
-                '.css': 'text/css',
-                '.png': 'image/png',
-                '.jpg': 'image/jpeg',
-                '.jpeg': 'image/jpeg'
+mimeTypes    = {'.html' : 'text/html', 
+                '.xhtml': 'text/xhtml', 
+                '.js'   : 'text/javascript',
+                '.css'  : 'text/css',
+                '.png'  : 'image/png',
+                '.jpg'  : 'image/jpeg',
+                '.jpeg' : 'image/jpeg'
                }
 
 # if these files are asked for, with any path, the mapped
 # files will be returned instead, these are allowed even
 # if the users is not authenticated.  These are meant to 
 # be used to provide logon pages and supporting files.
-fileMAP      = {'smartweb-logon.html': loginDir + 'smartweb-logon.html',
-                'smartweb-logon.css': loginDir + 'smart-logon.css',
-                'smartweb-sha256.js': loginDir + 'smartweb-sha256.js',
-                'smartweb-icon.png': loginDir + 'smartweb-icon.png',
-                'smartweb-logon.css': loginDir + 'smartweb-logon.css',
-                'smartweb-avatar.png': loginDir + 'smartweb-avatar.png',
-                'smartweb-jquery.js': loginDir + 'smartweb-jquery.js'
+fileMAP      = {'smartweb-logon.html' : loginDir + 'smartweb-logon.html',
+                'smartweb-logon.css'  : loginDir + 'smartweb-logon.css',
+                'smartweb-sha256.js'  : loginDir + 'smartweb-sha256.js',
+                'smartweb-icon.png'   : loginDir + 'smartweb-icon.png',                
+                'smartweb-avatar.png' : loginDir + 'smartweb-avatar.png',
+                'smartweb-jquery.js'  : loginDir + 'smartweb-jquery.js'
                }
 
 # if python files are asked for, check the following map of authorized
