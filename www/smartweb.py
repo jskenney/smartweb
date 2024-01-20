@@ -4,8 +4,7 @@
 # Provides a simple web file protection service
 
 # Load in system libraries
-import cgi, sys, os, shutil, importlib
-from hashlib import md5
+import cgi, sys, os, shutil
 
 # Define path for local configuration files
 sys.path.append("../lib")
@@ -68,6 +67,7 @@ pswd = form.getvalue('smartwebPassword')
 # If username and password were provided, check to see
 # if this is a valid user
 if usnm is not None and pswd is not None:
+    from hashlib import md5
     up = usnm + pswd
     userhash = md5(up.encode()).hexdigest()
     usnmhash = md5(usnm.encode()).hexdigest()
@@ -103,6 +103,7 @@ if os.path.split(filename)[1] in pyMAP and os.path.isfile(pyMAP[os.path.split(fi
     pypath, pyfile = os.path.split(os.path.realpath(pyMAP[os.path.split(filename)[1]]))
     pyfile = os.path.splitext(pyfile)
     sys.path.append(pypath)
+    import importlib
     importlib.import_module(pyfile[0])
     sys.exit()
 
@@ -127,3 +128,4 @@ if missingFileProvideDefault:
 
 # Otherwise just flag it as an error
 provideError(errorMsg, 'File not found: '+p)
+
