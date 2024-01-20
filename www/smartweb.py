@@ -70,7 +70,8 @@ pswd = form.getvalue('smartwebPassword')
 if usnm is not None and pswd is not None:
     up = usnm + pswd
     userhash = md5(up.encode()).hexdigest()
-    pwdata = loadDB(authFile, {'0000':{}})
+    usnmhash = md5(usnm.encode()).hexdigest()
+    pwdata = loadDB(authFile, {})
     print('Content-type: text/html\n\n')
     if userhash in pwdata:
         user = userhash
@@ -78,8 +79,17 @@ if usnm is not None and pswd is not None:
         userMap[myuuid] = userhash
         saveDB(authMapFile, userMap)
         print('Success!')
+    elif usnmhash in pwdata and 'password' in pwdata[usnmhash] and pwdata[usnmhash]['password'] == userhash:
+        user = usnmhash
+        userMap = loadDB(authMapFile, {})
+        userMap[myuuid] = usnmhash
+        saveDB(authMapFile, userMap)
+        print('Success!')
     else:
+        print('<pre>')
+        print(usnmhash)
         print(userhash)
+        print('</pre>')
     sys.exit()
 
 # If no user found, then stop
