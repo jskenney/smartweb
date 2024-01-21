@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/smartweb-logon.css">
 
     <script src="/smartweb-sha256.js"></script>
+    <script src="/smartweb-md5.js"></script>
     <script src="/smartweb-jquery.js"></script>
 
     <title>Site Logon</title>
@@ -43,28 +44,15 @@
         var email = $('#inputEmail').val();
         passwd = forge_sha256(passwd);
 	      email = forge_sha256(email);
-        $.ajax({
-            url: '/',
-            method: 'POST',
-            data: {
-                    smartwebEmail: email,
-                    smartwebPassword: passwd
-                  },
-            success: function(result) {
-		          $('#loginform').html('');
-		          $('#gethash').html('<center>'+result+'</center>');
-            }
-        });
+        var usnmhash = md5(email);
+        var userhash = md5(email+passwd);
+        var html = "<pre>"+usnmhash+"<br>"+userhash+"</pre>";
+        $('#loginform').html('');
+        $('#gethash').html('<center>'+html+'</center>');
         e.preventDefault();
     });
 
     $(document).ready(function() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const logoff = urlParams.get('smartlogoff')
-        if (logoff != null) {
-          document.location = location.protocol + '//' + location.host + location.pathname;
-        }
         document.title = window.location.host.split(".")[0] + ' logon required';
     });
 
