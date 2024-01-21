@@ -35,7 +35,7 @@ if myuuid in userMap:
     user = userMap[myuuid]
 
 # Load User data from authentication file
-pwdata = loadDB(authFile, {'0000':{}})
+pwdata = loadDB(authFile, {})
 if user in pwdata:
     permissions = pwdata[user]
     if 'admin' in permissions and permissions['admin']:
