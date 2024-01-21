@@ -36,14 +36,18 @@ def provideError(filename, message):
         print(f.read().replace('{message}', message))
     sys.exit()
 
-# Get that path variable from the web server
+# Get path variable from the web server
 form = cgi.FieldStorage()
 p = form.getvalue('path')
 l = form.getvalue('smartlogoff')
 
-# If no page provided put in a default
+# If no path is provided use default page
 if p is None:
     p = defaultPage
+
+# lets abort if the user added another path (not from the rewrite)
+if not isinstance(p, str):
+    provideError(errorMsg, 'Failed attempt to modify path.')
 
 # Determine what the real file we want to get is
 filename = sourceDir + '/' + p
@@ -93,7 +97,7 @@ if usnm is not None and pswd is not None:
     sys.exit()
 
 # If no user found, then stop
-if user == 'x' or user == '':
+if user == '':
     provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
 
 # If the file is in the pyMAP than import that file
