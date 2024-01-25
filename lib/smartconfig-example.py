@@ -35,6 +35,7 @@ logonFile    = 'smartweb-logon.html'
 # specific MIME types, that will not be default octet-stream
 mimeTypes    = {'.html' : 'text/html', 
                 '.xhtml': 'text/xhtml', 
+		'.txt'  : 'text/plain',
                 '.js'   : 'text/javascript',
                 '.css'  : 'text/css',
                 '.png'  : 'image/png',
