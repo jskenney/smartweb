@@ -32,6 +32,9 @@ loginDir     = baseDir + '/login/'
 # Logon File name (add this to the fileMAP below as well)
 logonFile    = 'smartweb-logon.html'
 
+# Directory in which to store session files
+sessionDir   = '/tmp/'
+
 # specific MIME types, that will not be default octet-stream
 mimeTypes    = {'.html' : 'text/html', 
                 '.xhtml': 'text/xhtml', 

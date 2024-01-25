@@ -4,6 +4,7 @@
 # https://realpython.com/inherit-python-dict/
 # https://docs.python.org/3/reference/datamodel.html
 
+from smartconfig import sessionDir
 from os.path import exists
 from getpass import getuser
 from os import environ, makedirs, chmod
@@ -42,7 +43,7 @@ class Session:
     def __init__(self, cookieName='smartweb', identifier=None):
         if identifier is None:
             identifier = cookie(cookieName)
-        self.path = '/tmp/python-sessions-' + getuser() +'/sessions/'
+        self.path = sessionDir +'/python-sessions-' + getuser() + '/sessions/'
         self.filename = self.path+identifier
         self.data = None
         self.debug = False
@@ -106,6 +107,7 @@ class Session:
         self.load({})
         return list(self.data.keys())
 
+# Some quick debugging tests
 if __name__ == '__main__':
     a = Session()
     print('Creating First set of values')
