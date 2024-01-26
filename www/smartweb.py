@@ -82,15 +82,13 @@ if usnm is not None and pswd is not None and mnow is not None:
         print("{'message':'invalid password'}")
         sys.exit()
     combined = mnow + pwdata[usnmhash]['password']
+    del(pwdata[usnmhash]['password'])
     passhash = sha256(combined.encode()).hexdigest()
     if not passhash == pswd or abs(float(mnow)-time()) > logonTime:
         print("{'message':'invalid password'}")
         sys.exit()
-    userMap = loadDB(authMapDir+myuuid+'.json', {'user':'', 'start': 0, 'env': ''})
-    userMap['user'] = usnmhash
-    userMap['start'] = float(mnow)
-    userMap['env'] = str(os.environ)[8:-1]
-    saveDB(authMapDir+myuuid+'.json', userMap)
+    saveDB(authMapDir+myuuid+'.json',     {'user':usnmhash})
+    saveDB(authMapDir+myuuid+'.json.map', {'user':usnmhash, 'env':str(os.environ)[8:-1], 'data':pwdata[usnmhash], 'start': float(mnow)})
     print("{'message':'success'}")
     sys.exit()
 
