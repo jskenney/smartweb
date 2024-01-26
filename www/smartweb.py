@@ -11,7 +11,7 @@ sys.path.append("../lib")
 sys.path.append("../config")
 
 # Load in local configuration files and authenitication
-from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs, authFile, authMapFile, pyMAP
+from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs, authFile, authMapFile, pyMAP, logonTime
 from tools import loadDB, saveDB
 
 # Simple function to provide a file back to the browser
@@ -82,7 +82,7 @@ if usnm is not None and pswd is not None and mnow is not None:
         sys.exit()
     combined = mnow + pwdata[usnmhash]['password']
     passhash = sha256(combined.encode()).hexdigest()
-    if not passhash == pswd or abs(float(mnow)-time()) > 120:
+    if not passhash == pswd or abs(float(mnow)-time()) > logonTime:
         print("{'message':'invalid password'}")
         sys.exit()
     userMap = loadDB(authMapFile, {})
