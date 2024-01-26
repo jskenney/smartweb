@@ -1,6 +1,7 @@
 #!/usr/bin/python3 -B
 
 from hashlib import md5, sha256
+from getpass import getpass
 from sys import argv
 from json import loads, dumps
 
@@ -24,7 +25,7 @@ print('username:', username)
 authfile = loadDB('users.json', {})
 
 if username.find('@') != -1:
-    password = input('password: ')
+    password = getpass('password: ')
     pwhash   = sha256(password.encode()).hexdigest()
     usnmhash = sha256(username.encode()).hexdigest()
     usnmhash = sha256(usnmhash.encode()).hexdigest()
