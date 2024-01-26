@@ -65,6 +65,7 @@ else:
     admin = False
     from deauth import user, myuuid
 
+# Get Username and Password from the user if provided
 usnm = form.getvalue('smartwebEmail')
 pswd = form.getvalue('smartwebPassword')
 mnow = form.getvalue('smartwebTime')
@@ -85,8 +86,10 @@ if usnm is not None and pswd is not None and mnow is not None:
     if not passhash == pswd or abs(float(mnow)-time()) > logonTime:
         print("{'message':'invalid password'}")
         sys.exit()
-    userMap = loadDB(authMapDir+myuuid+'.json', {'user':'', 'start': float(mnow), 'env': str(os.environ)[8:-1]})
+    userMap = loadDB(authMapDir+myuuid+'.json', {'user':'', 'start': 0, 'env': ''})
     userMap['user'] = usnmhash
+    userMap['start'] = float(mnow)
+    userMap['env'] = str(os.environ)[8:-1]
     saveDB(authMapDir+myuuid+'.json', userMap)
     print("{'message':'success'}")
     sys.exit()
