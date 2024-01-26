@@ -40,14 +40,17 @@
         $('#inputPassword').prop('disabled', true);
         var passwd = $('#inputPassword').val();
         var email = $('#inputEmail').val();
+        var now = Date.now()/1000;
         passwd = forge_sha256(passwd);
+        passwd = forge_sha256(now+passwd);
         email = forge_sha256(email);
         $.ajax({
             url: '?',
             method: 'POST',
             data: {
                     smartwebEmail: email,
-                    smartwebPassword: passwd
+                    smartwebPassword: passwd,
+                    smartwebTime: now
                   },
             success: function(result) {
               location.reload();

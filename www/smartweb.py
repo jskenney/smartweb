@@ -67,33 +67,28 @@ else:
 
 usnm = form.getvalue('smartwebEmail')
 pswd = form.getvalue('smartwebPassword')
+mnow = form.getvalue('smartwebTime')
 
 # If username and password were provided, check to see
 # if this is a valid user
-if usnm is not None and pswd is not None:
-    from hashlib import md5
-    up = usnm + pswd
-    userhash = md5(up.encode()).hexdigest()
-    usnmhash = md5(usnm.encode()).hexdigest()
-    pwdata = loadDB(authFile, {})
+if usnm is not None and pswd is not None and mnow is not None:
     print('Content-type: text/html\n\n')
-    if userhash in pwdata:
-        user = userhash
-        userMap = loadDB(authMapFile, {})
-        userMap[myuuid] = userhash
-        saveDB(authMapFile, userMap)
-        print('Success!')
-    elif usnmhash in pwdata and 'password' in pwdata[usnmhash] and pwdata[usnmhash]['password'] == userhash:
-        user = usnmhash
-        userMap = loadDB(authMapFile, {})
-        userMap[myuuid] = usnmhash
-        saveDB(authMapFile, userMap)
-        print('Success!')
-    else:
-        print('<pre>')
-        print(usnmhash)
-        print(userhash)
-        print('</pre>')
+    from hashlib import sha256
+    from time import time
+    pwdata = loadDB(authFile, {})
+    usnmhash = sha256(usnm.encode()).hexdigest()
+    if not usnmhash in pwdata or 'password' not in pwdata[usnmhash]:
+        print("{'message':'invalid password'}")
+        sys.exit()
+    combined = mnow + pwdata[usnmhash]['password']
+    passhash = sha256(combined.encode()).hexdigest()
+    if not passhash == pswd or abs(float(mnow)-time()) > 120:
+        print("{'message':'invalid password'}")
+        sys.exit()
+    userMap = loadDB(authMapFile, {})
+    userMap[myuuid] = usnmhash
+    saveDB(authMapFile, userMap)
+    print("{'message':'success'}")
     sys.exit()
 
 # If no user found, then stop

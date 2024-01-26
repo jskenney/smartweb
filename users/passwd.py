@@ -19,18 +19,19 @@ def loadDB(filename, default):
 
 username = argv[-1]
 
-print('username:', username) 
+print('username:', username)
 
 authfile = loadDB('users.json', {})
 
 if username.find('@') != -1:
     password = input('password: ')
-    pwhash = md5(str(str(sha256(username.encode()).hexdigest())+str(sha256(password.encode()).hexdigest())).encode()).hexdigest()
-    usnmhash = md5(str(str(sha256(username.encode()).hexdigest())).encode()).hexdigest()
+    pwhash   = sha256(password.encode()).hexdigest()
+    usnmhash = sha256(username.encode()).hexdigest()
+    usnmhash = sha256(usnmhash.encode()).hexdigest()
     authfile[usnmhash] = {'username':username, 'password':pwhash}
 else:
     pwhash = input('passhash: ')
-    usnmhash = username
+    usnmhash = sha256(username.encode()).hexdigest()
     authfile[usnmhash] = {'password':pwhash}
 
 saveDB('users.json', authfile)
