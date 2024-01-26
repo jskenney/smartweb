@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/smartweb-logon.css">
 
     <script src="/smartweb-sha256.js"></script>
-    <script src="/smartweb-md5.js"></script>
     <script src="/smartweb-jquery.js"></script>
 
     <title>Site Logon</title>
@@ -29,7 +28,7 @@
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" id="sbutton">Sign in</button>
             </form>
-	          <p id="gethash"></p>
+           <p id="gethash"></p>
         </div>
     </div>
   </body>
@@ -40,13 +39,11 @@
         $('#sbutton').prop('disabled', true);
         $('#inputEmail').prop('disabled', true);
         $('#inputPassword').prop('disabled', true);
-	      var passwd = $('#inputPassword').val();
+        var passwd = $('#inputPassword').val();
         var email = $('#inputEmail').val();
         passwd = forge_sha256(passwd);
-	      email = forge_sha256(email);
-        var usnmhash = md5(email);
-        var userhash = md5(email+passwd);
-        var html = "<pre>"+usnmhash+"<br>"+userhash+"</pre>";
+        email = forge_sha256(email);
+        var html = "<pre>"+email+"<br>"+passwd+"</pre>";
         $('#loginform').html('');
         $('#gethash').html('<center>'+html+'</center>');
         e.preventDefault();
