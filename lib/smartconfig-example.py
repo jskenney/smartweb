@@ -24,7 +24,7 @@ userDir      = baseDir + '/users/'
 authFile     = userDir + 'users.json'
 
 # Location of cookie to user mappings
-authMapFile  = userDir + 'cookiemap.json'
+authMapDir   = baseDir + '/cookies/'
 
 # Location of login files
 loginDir     = baseDir + '/login/'

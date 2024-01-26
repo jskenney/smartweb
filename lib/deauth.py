@@ -2,7 +2,7 @@
 
 # Import Required Libraries
 import os, uuid
-from smartconfig import authMapFile, cookieName, defaultPage
+from smartconfig import authMapDir, cookieName, defaultPage
 from tools import loadDB, saveDB
 from sessions import Session
 
@@ -25,13 +25,9 @@ else:
     if not found:
         print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; Secure')
 
-# Load the user file
-userMap = loadDB(authMapFile, {})
-
 # Remove the user from the cookie to username map
-if myuuid in userMap:
-    del(userMap[myuuid])
-    saveDB(authMapFile, userMap)
+if os.path.isfile(authMapDir+myuuid+'.json'):
+    os.remove(authMapDir+myuuid+'.json')
 
 # Set the user to unknown
 user = ''

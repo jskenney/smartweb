@@ -1,6 +1,6 @@
 # Import Required Libraries
 import os, uuid
-from smartconfig import authFile, authMapFile, cookieName
+from smartconfig import authFile, authMapDir, cookieName
 from tools import loadDB
 from sessions import Session
 
@@ -28,20 +28,18 @@ else:
         print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; Secure')
 
 # Load the user file
-userMap = loadDB(authMapFile, {})
-
-# If the user is valid, return their name
-if myuuid in userMap:
-    user = userMap[myuuid]
+userMap = loadDB(authMapDir+myuuid+'.json', {'user':''})
+user = userMap['user']
 
 # Load User data from authentication file
-pwdata = loadDB(authFile, {})
-if user in pwdata:
-    permissions = pwdata[user]
-    if 'admin' in permissions and permissions['admin']:
-        admin = True
-else:
-    user = ''
+if user != '':
+    pwdata = loadDB(authFile, {})
+    if user in pwdata:
+        permissions = pwdata[user]
+        if 'admin' in permissions and permissions['admin']:
+            admin = True
+    else:
+        user = ''
 
 # Load session variable
 if user != '':
