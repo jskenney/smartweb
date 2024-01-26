@@ -28,6 +28,8 @@ else:
 # Remove the user from the cookie to username map
 if os.path.isfile(authMapDir+myuuid+'.json'):
     os.remove(authMapDir+myuuid+'.json')
+if os.path.isfile(authMapDir+myuuid+'.json.map'):
+    os.remove(authMapDir+myuuid+'.json.map')
 
 # Set the user to unknown
 user = ''
