@@ -34,6 +34,8 @@ if user != '':
         permissions = pwdata[user]
         if 'admin' in permissions and permissions['admin']:
             admin = True
+        if 'password' in permissions:
+            del(permissions['password'])
     else:
         user = ''
 
