@@ -73,22 +73,24 @@ mnow = form.getvalue('smartwebTime')
 # If username and password were provided, check to see
 # if this is a valid user
 if usnm is not None and pswd is not None and mnow is not None:
-    print('Content-type: text/html\n\n')
     from hashlib import sha256
     from time import time
     pwdata = loadDB(authFile, {})
     usnmhash = sha256(usnm.encode()).hexdigest()
     if not usnmhash in pwdata or 'password' not in pwdata[usnmhash]:
-        print("{'message':'invalid password'}")
+        provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
+        #print("{'message':'invalid password'}")
         sys.exit()
     combined = mnow + pwdata[usnmhash]['password']
     del(pwdata[usnmhash]['password'])
     passhash = sha256(combined.encode()).hexdigest()
     if not passhash == pswd or abs(float(mnow)-time()) > logonTime:
-        print("{'message':'invalid password'}")
+        provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
+        #print("{'message':'invalid password'}")
         sys.exit()
     saveDB(authMapDir+myuuid+'.json',     {'user':usnmhash})
     saveDB(authMapDir+myuuid+'.json.map', {'user':usnmhash, 'env':str(os.environ)[8:-1], 'data':pwdata[usnmhash], 'start': float(mnow)})
+    print('Content-type: text/html\n\n')
     print("{'message':'success'}")
     sys.exit()
 
