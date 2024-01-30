@@ -39,10 +39,11 @@
         $('#sbutton').prop('disabled', true);
         $('#inputEmail').prop('disabled', true);
         $('#inputPassword').prop('disabled', true);
+        var email  = $('#inputEmail').val();
         var passwd = $('#inputPassword').val();
-        var email = $('#inputEmail').val();
+        email  = forge_sha256(email);
         passwd = forge_sha256(passwd);
-        email = forge_sha256(email);
+        passwd = forge_sha256(passwd+email);
         var html = "<pre>"+email+"<br>"+passwd+"</pre>";
         $('#loginform').html('');
         $('#gethash').html('<center>'+html+'</center>');

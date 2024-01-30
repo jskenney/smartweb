@@ -38,12 +38,13 @@
         $('#sbutton').prop('disabled', true);
         $('#inputEmail').prop('disabled', true);
         $('#inputPassword').prop('disabled', true);
+        var email  = $('#inputEmail').val();
         var passwd = $('#inputPassword').val();
-        var email = $('#inputEmail').val();
-        var now = Date.now()/1000;
+        var now    = Date.now()/1000;
+        email  = forge_sha256(email);
         passwd = forge_sha256(passwd);
-        passwd = forge_sha256(now+passwd);
-        email = forge_sha256(email);
+        passwd = forge_sha256(passwd+email);
+        passwd = forge_sha256(passwd+now);
         $.ajax({
             url: '?',
             method: 'POST',
