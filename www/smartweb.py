@@ -88,6 +88,8 @@ if usnm is not None and pswd is not None and mnow is not None:
         provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
         #print("{'message':'invalid password'}")
         sys.exit()
+    if not os.path.exists(authMapDir):
+        os.makedirs(authMapDir, exist_ok=True)
     saveDB(authMapDir+myuuid+'.json',     {'user':usnmhash})
     saveDB(authMapDir+myuuid+'.json.map', {'user':usnmhash, 'env':str(os.environ)[8:-1], 'data':pwdata[usnmhash], 'start': float(mnow)})
     print('Content-type: text/html\n\n')
