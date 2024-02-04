@@ -5,7 +5,7 @@ from json import loads, dumps
 # Save a dictionary to file
 def saveDB(filename, data):
     with open(filename, 'w') as f:
-        f.write(dumps(data, indent=2))
+        f.write(dumps(data))
 
 # Load a dictionary from json
 def loadDB(filename, default):

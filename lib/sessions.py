@@ -33,7 +33,7 @@ def cookie(cookieName='smartweb'):
                 print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; Secure')
         if not found:
             print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; Secure')
-    
+
     # Return the created or found cookie
     return myuuid
 
@@ -70,7 +70,7 @@ class Session:
         self.load({})
         try:
             with open(self.filename, 'w') as f:
-                f.write(dumps(self.data, indent=2))
+                f.write(dumps(self.data))
                 if self.debug:
                     print('# Saving', self.filename)
         except:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     a[6] = {'g':5}
     print(a[5])
     print(a[5]['a'])
-    print(a.keys()) 
+    print(a.keys())
     print(str(a))
     print(repr(a))
     print(5 in a)
