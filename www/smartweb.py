@@ -4,15 +4,16 @@
 # Provides a simple web file protection service
 
 # Load in system libraries
-import cgi, sys, os, shutil
+import sys, os, shutil
 
 # Define path for local configuration files
-sys.path.append("../lib")
-sys.path.append("../config")
+sys.path.insert(0,"../lib")
+sys.path.insert(0,"../config")
 
 # Load in local configuration files and authenitication
 from smartconfig import sourceDir, mimeTypes, errorMsg, fileMAP, defaultPage, logonFile, missingFileProvideDefault, provideDirs, authFile, authMapDir, pyMAP, logonTime
 from tools import loadDB, saveDB
+import cgi
 
 # Simple function to provide a file back to the browser
 def provideFile(filename, mimeTypes, saveas=''):
@@ -132,4 +133,3 @@ if missingFileProvideDefault:
 
 # Otherwise just flag it as an error
 provideError(errorMsg, 'File not found: '+p)
-

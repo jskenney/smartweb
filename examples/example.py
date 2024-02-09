@@ -1,11 +1,11 @@
 #!/usr/bin/python3 -B
 
 # Required or suggested libraries
-import cgi, time, sys, os
+import time, sys, os
 from json import dumps
 
 # Add the path for the configuration file and libraries
-sys.path.append('../lib')        # smartweb configuration directory
+sys.path.insert(0, '../lib')        # smartweb configuration directory
 
 # Load smartweb permissions and additional tools.
 from otherauth import user, permissions, admin
