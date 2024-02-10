@@ -107,7 +107,7 @@ if user == '':
 if os.path.split(filename)[1] in pyMAP and os.path.isfile(pyMAP[os.path.split(filename)[1]]):
     pypath, pyfile = os.path.split(os.path.realpath(pyMAP[os.path.split(filename)[1]]))
     pyfile = os.path.splitext(pyfile)
-    sys.path.append(pypath)
+    sys.path.insert(0,pypath)
     import importlib
     importlib.import_module(pyfile[0])
     sys.exit()
