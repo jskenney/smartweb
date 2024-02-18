@@ -56,6 +56,8 @@ mimeTypes    = {'.html' : 'text/html',
 # be used to provide logon pages and supporting files.
 fileMAP      = {'smartweb-logon.html' : loginDir + 'smartweb-logon.html',
                 'smartweb-logon.css'  : loginDir + 'smartweb-logon.css',
+                'smartweb-logon.js'   : loginDir + 'smartweb-logon.js',
+                'smartweb-icons.js'   : loginDir + 'smartweb-icons.js',
                 'smartweb-sha256.js'  : loginDir + 'smartweb-sha256.js',
                 'smartweb-icon.png'   : loginDir + 'smartweb-icon.png',
                 'smartweb-avatar.png' : loginDir + 'smartweb-avatar.png',
