@@ -1,58 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
 
-  <head>
+	<meta charset="utf-8">
+	<meta name="viewport"  content="width=device-width, initial-scale=1">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"  content="width=device-width, initial-scale=1">
+	<link rel="icon"       href="/smartweb-icon.png">
+	<link rel="stylesheet" href="/smartweb-logon.css">
 
-    <link rel="icon"       href="/smartweb-icon.png">
-    <link rel="stylesheet" href="/smartweb-logon.css">
+	<script src="/smartweb-logon.js"></script>
+	<script src="/smartweb-icons.js"></script>
+	<script src="/smartweb-sha256.js"></script>
+	<script src="/smartweb-jquery.js"></script>
 
-    <script src="/smartweb-sha256.js"></script>
-    <script src="/smartweb-jquery.js"></script>
+	<title>Site Logon</title>
 
-    <title>Site Logon</title>
-    
-  </head>
+</head>
+<body class="uk-flex uk-flex-center uk-flex-middle uk-background-muted uk-height-viewport" data-uk-height-viewport>
+	<div class="uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade" uk-height-viewport uk-animation-fade>
+		<div class="uk-width-1-1">
+			<div class="uk-container">
+				<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
+					<div class="uk-width-5-6 uk-margin-auto">
+						<div class="uk-card uk-card-default uk-card-large uk-grid-collapse uk-child-width-1-2@s uk-margin uk-border-rounded uk-position-relative uk-overflow-hidden" uk-grid>
+							<div class="uk-flex-last@s uk-card-media-right uk-cover-container">
+								<img src="/smartweb-avatar.png" alt="" uk-cover>
+								<canvas width="600" height="400"></canvas>
+							</div>
+							<div>
+								<div class="uk-card-body">
+									<form id="loginform">
+										<div class="uk-margin">
+											<div class="uk-inline uk-width-1-1">
+												<center><span class="uk-icon" uk-icon="icon: user; ratio: 4"></span></center>
+											</div>
+										</div>
+										<div class="uk-margin">
+											<div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: mail"></span>
+												<input class="uk-input uk-form" id="inputEmail" type="email" placeholder="Email Address" required autofocus>
+											</div>
+										</div>
+										<div class="uk-margin">
+											<div class="uk-inline uk-width-1-1">
+												<span class="uk-form-icon" uk-icon="icon: lock"></span>
+												<input class="uk-input uk-form" id="inputPassword" type="password" placeholder="Password" required>
+											</div>
+										</div>
+										<div class="uk-margin">
+											<div class="uk-form-controls">
+												<button class="uk-button uk-button-primary uk-width-1-1" id="sbutton">Sign in</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+									<p id="gethash"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type='text/javascript'>
 
-  <body>
-    <div class="container">
-        <div class="card card-container">
-            <img id="profile-img" class="profile-img-card" src="/smartweb-avatar.png" />
-            <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" id="loginform">
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" id="sbutton">Sign in</button>
-            </form>
-           <p id="gethash"></p>
-        </div>
-    </div>
-  </body>
 
-  <script type='text/javascript'>
+		$("#loginform").submit(function(e){
+        		$('#sbutton').prop('disabled', true);
+        		$('#inputEmail').prop('disabled', true);
+        		$('#inputPassword').prop('disabled', true);
+        		var email  = $('#inputEmail').val();
+        		var passwd = $('#inputPassword').val();
+        		email  = forge_sha256(email);
+        		passwd = forge_sha256(passwd);
+        		passwd = forge_sha256(passwd+email);
+			var html = "<pre>Provide the following to the site administrator:<br><br>"+email+"<br>"+passwd+"</pre>";
+        		$('#gethash').html('<center>'+html+'</center>');
+        		e.preventDefault();
+    		});
 
-     $("#loginform").submit(function(e){
-        $('#sbutton').prop('disabled', true);
-        $('#inputEmail').prop('disabled', true);
-        $('#inputPassword').prop('disabled', true);
-        var email  = $('#inputEmail').val();
-        var passwd = $('#inputPassword').val();
-        email  = forge_sha256(email);
-        passwd = forge_sha256(passwd);
-        passwd = forge_sha256(passwd+email);
-        var html = "<pre>"+email+"<br>"+passwd+"</pre>";
-        $('#loginform').html('');
-        $('#gethash').html('<center>'+html+'</center>');
-        e.preventDefault();
-    });
+		$(document).ready(function() {
+		  document.title = window.location.host.split(".")[0] + ' logon required';
+		});
 
-    $(document).ready(function() {
-        document.title = window.location.host.split(".")[0] + ' logon required';
-    });
-
-  </script>
-</html>
+	</script>
+	</html>
