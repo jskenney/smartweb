@@ -21,7 +21,7 @@ def cookie(cookieName='smartweb'):
     # Either add that UUID as the cookie (cookieName) or replace myuuid
     # with the value of myuuid if it exists
     if not 'HTTP_COOKIE' in environ:
-        print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; SameSite=Strict; Secure')
+        print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; SameSite=Lax; Secure')
     else:
         hc = environ['HTTP_COOKIE'].split(';')
         found = False
@@ -30,9 +30,9 @@ def cookie(cookieName='smartweb'):
             if c[0] == cookieName:
                 myuuid = c[1]
                 found = True
-                print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; SameSite=Strict; Secure')
+                print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; SameSite=Lax; Secure')
         if not found:
-            print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; SameSite=Strict; Secure')
+            print('Set-Cookie: '+cookieName+'='+myuuid+'; Path=/; SameSite=Lax; Secure')
 
     # Return the created or found cookie
     return myuuid
