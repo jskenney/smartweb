@@ -115,11 +115,8 @@ if os.path.split(filename)[1] in pyMAP and os.path.isfile(pyMAP[os.path.split(fi
 # We should try: filename, filename+index.html
 # Provide the file if that path exists and exists within the appropriate path
 possibilities = [filename]
-if len(filename) > 1:
-    if filename[-1] == '/':
-        possibilities.append(filename+'index.html')
-    else:
-        possibilities.append(filename+'/index.html')
+if len(filename) > 1 and filename[-1] == '/':
+    possibilities.append(filename+'index.html')
 for filename in possibilities:
     if os.path.exists(filename) and os.path.isfile(filename):
         authorized = False
@@ -127,6 +124,11 @@ for filename in possibilities:
             authorized = True
         if authorized:
             provideFile(filename, mimeTypes)
+
+# If the path was a directory directly, without a trailing slash,
+# lets redirect to that path
+if len(filename) > 1 and filename[-1] != '/' and os.path.isdir(filename):
+    pass
 
 # A Valid file wasn't found, try using the default page
 if missingFileProvideDefault:
