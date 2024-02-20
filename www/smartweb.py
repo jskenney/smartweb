@@ -37,6 +37,16 @@ def provideError(filename, message):
         print(f.read().replace('{message}', message))
     sys.exit()
 
+# Simple function to provide a 302 redirect if the path
+# was a directory
+def provideRedirect(path):
+    print('Content-type: text/html')
+    print('Status: 302 Found')
+    print('Location:', path)
+    print()
+    print("<html><head><title>302 Found</title></head><body><center><h1>302 Found</h1></center></body></html>")
+    sys.exit()
+
 # Get path variable from the web server
 form = cgi.FieldStorage()
 p = form.getvalue('path')
@@ -117,18 +127,18 @@ if os.path.split(filename)[1] in pyMAP and os.path.isfile(pyMAP[os.path.split(fi
 possibilities = [filename]
 if len(filename) > 1 and filename[-1] == '/':
     possibilities.append(filename+'index.html')
-for filename in possibilities:
-    if os.path.exists(filename) and os.path.isfile(filename):
+for chkFilename in possibilities:
+    if os.path.exists(chkFilename) and os.path.isfile(chkFilename):
         authorized = False
-        if os.path.realpath(filename).startswith(provideDirs) and os.path.realpath(filename).find('/.') == -1:
+        if os.path.realpath(chkFilename).startswith(provideDirs) and os.path.realpath(chkFilename).find('/.') == -1:
             authorized = True
         if authorized:
-            provideFile(filename, mimeTypes)
+            provideFile(chkFilename, mimeTypes)
 
 # If the path was a directory directly, without a trailing slash,
 # lets redirect to that path
-if len(filename) > 1 and filename[-1] != '/' and os.path.isdir(filename):
-    pass
+if len(filename) > 1 and filename[-1] != '/' and os.path.isdir(filename) and os.path.exists(filename+'/index.html'):
+    provideRedirect(p+'/')
 
 # A Valid file wasn't found, try using the default page
 if missingFileProvideDefault:
