@@ -99,6 +99,27 @@ if usnm is not None and pswd is not None and mnow is not None:
         provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
         #print("{'message':'invalid password'}")
         sys.exit()
+    if 'access' in pwdata[usnmhash]:
+        if not 'HTTP_HOST' in os.environ or not 'REMOTE_ADDR' in os.environ:
+            provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
+            #print("{'message':'missing host or remote address information'}")
+            sys.exit()
+        HTTP_HOST = os.environ['HTTP_HOST']
+        REMOTE_ADDR = os.environ['REMOTE_ADDR']
+        if not HTTP_HOST in pwdata[usnmhash]['access']:
+            provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
+            #print("{'message':'unauthorized website'}")
+            sys.exit()
+        ALLOWED_REMOTE = pwdata[usnmhash]['access'][HTTP_HOST]
+        if ALLOWED_REMOTE != []:
+            FOUND_AUTH = False
+            for IP in ALLOWED_REMOTE:
+                if REMOTE_ADDR.startswith(IP):
+                    FOUND_AUTH = True
+            if not FOUND_AUTH:
+                provideFile(fileMAP[os.path.split(logonFile)[1]], mimeTypes)
+                #print("{'message':'unauthorized source address'}")
+                sys.exit()
     if not os.path.exists(authMapDir):
         os.makedirs(authMapDir, exist_ok=True)
     saveDB(authMapDir+myuuid+'.json',     {'user':usnmhash})
